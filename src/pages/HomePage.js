@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
+import SuccessModal from '../components/Modals/SuccessModal';
 import { createBooking } from '../service/Api';
 
 
 function HomePage() {
 
     const [firstName, setFirstName] = useState('');
+    const [thanksModal, setThanksModal] = useState(false);
     const [lastName, setLastName] = useState('');
     const [emailField, setEmailField] = useState('');
     const [countrySelect, setcountrySelect] = useState('');
     const [persons, setPersons] = useState('');
     const [budgetField, setBudgetField] = useState('');
-    
+
 
     const HandleSubmit =(e)=>{
         e.preventDefault();
@@ -27,7 +29,9 @@ function HomePage() {
         }
         createBooking({...formValues}).then((res)=>{
             if(res.status === 201){
-                alert('Form submission Succesful')
+                setThanksModal(true)
+            }else{
+                alert('Cannot submit form')
             }
         })
     }
@@ -77,6 +81,9 @@ function HomePage() {
                     </Button>
                 </Form>
             </Content>
+            {thanksModal && (
+                <SuccessModal setThanksModal={setThanksModal} />
+            )}
         </Main>
     )
 }
