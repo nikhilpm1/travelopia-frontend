@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { getAllBookings } from '../service/Api';
 
@@ -15,31 +17,35 @@ function BookingListPage() {
 
     return (
         <Main>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Country</th>
-                        <th scope="col">No. of People</th>
-                        <th scope="col">Budget</th>
-                    </tr>
-                </thead>
-                {bookings.map((data)=>(
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>{data.first_name}</td>
-                        <td>{data.last_name}</td>
-                        <td>{data.email}</td>
-                        <td>{data.country}</td>
-                        <td>{data.no_of_persons}</td>
-                        <td>${data.budget}</td>
-                    </tr>
-                </tbody>))}
-            </table>
+            <Link to='/'>
+                <Button>Create New Booking</Button>
+            </Link>
+            {bookings.length === 0 ? <p>There are no Bookings</p> :
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">No. of People</th>
+                            <th scope="col">Budget</th>
+                        </tr>
+                    </thead>
+                    {bookings.map((data,idx) => (
+                        <tbody>
+                            <tr>
+                                <th scope="row">{idx}</th>
+                                <td>{data.first_name}</td>
+                                <td>{data.last_name}</td>
+                                <td>{data.email}</td>
+                                <td>{data.country}</td>
+                                <td>{data.no_of_persons}</td>
+                                <td>${data.budget}</td>
+                            </tr>
+                        </tbody>))}
+                </table>}
         </Main>
     )
 }
@@ -53,13 +59,19 @@ width: 100vw;
 background-repeat: no-repeat;
 background-size: cover;
 display: flex;
+flex-direction: column;
 justify-content: center;
+align-items: center;
+
+.btn{
+
+}
 
 .table{
     height: fit-content;
     width: 70%;
     background-color: rgba(0,0,0, 0.6); 
     color: white;
-    margin-top: 150px
+    margin-top: 15px
 }
 `;
