@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SuccessModal from '../components/Modals/SuccessModal';
 import { createBooking } from '../service/Api';
@@ -17,20 +18,21 @@ function HomePage() {
     const [budgetField, setBudgetField] = useState('');
 
 
-    const HandleSubmit =(e)=>{
+    const HandleSubmit = (e) => {
         e.preventDefault();
         const formValues = {
             first_name: firstName,
             last_name: lastName,
             email: emailField,
-            country:countrySelect,
+            country: countrySelect,
             no_of_persons: persons,
             budget: budgetField,
         }
-        createBooking({...formValues}).then((res)=>{
-            if(res.status === 201){
-                setThanksModal(true)
-            }else{
+        createBooking({ ...formValues }).then((res) => {
+            if (res.status === 201) {
+                setThanksModal(true);
+
+            } else {
                 alert('Cannot submit form')
             }
         })
@@ -38,24 +40,24 @@ function HomePage() {
 
     return (
         <Main>
-            <Head />
+            <Head>Travelopia</Head>
             <Content>
                 <Form onSubmit={HandleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" required onChange={(e)=>setFirstName(e.target.value)} />
+                        <Form.Control type="text" required onChange={(e) => setFirstName(e.target.value)} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" onChange={(e)=>setLastName(e.target.value)}   required/>
+                        <Form.Control type="text" onChange={(e) => setLastName(e.target.value)} required />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" onChange={(e)=>setEmailField(e.target.value)}   required/>
+                        <Form.Control type="email" onChange={(e) => setEmailField(e.target.value)} required />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Where do you want to go?</Form.Label>
-                        <select class="form-select" aria-label="Default select example" onChange={(e)=>setcountrySelect(e.target.value)} >
+                        <select class="form-select" aria-label="Default select example" onChange={(e) => setcountrySelect(e.target.value)} >
                             <option selected>Open this select menu</option>
                             <option value="1">India</option>
                             <option value="2">Africa</option>
@@ -64,7 +66,7 @@ function HomePage() {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Number of People</Form.Label>
-                        <Form.Control type="number" required onChange={(e)=>setPersons(e.target.value)} />
+                        <Form.Control type="number" required onChange={(e) => setPersons(e.target.value)} />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -73,12 +75,19 @@ function HomePage() {
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input type="number" onChange={(e)=>setBudgetField(e.target.value)}  required class="form-control" aria-label="Amount (to the nearest dollar)" />
+                            <input type="number" onChange={(e) => setBudgetField(e.target.value)} required class="form-control" aria-label="Amount (to the nearest dollar)" />
                         </div>
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Submit
-                    </Button>
+                    <ButtonGroup>
+                        <Button variant="primary" type="submit">
+                            Submit
+                        </Button>
+                        <Link to='/bookings'>
+                            <Button>
+                                See All Bookings
+                            </Button>
+                        </Link>
+                    </ButtonGroup>
                 </Form>
             </Content>
             {thanksModal && (
@@ -100,8 +109,13 @@ background-size: cover;
 display: flex;
 `;
 
-const Head = styled.img`
-
+const Head = styled.h1`
+font-family: ui-monospace;
+    font-size: 46px;
+    font-weight: bold;
+    color: white;
+    margin-left: 30px;
+    margin-top: 30px;
 `;
 
 const Content = styled.div`
@@ -114,4 +128,9 @@ color: white;
 .mb-3{
     width: 425px;
 }
+`;
+
+const ButtonGroup = styled.div`
+display: flex;
+justify-content: space-around;
 `;
