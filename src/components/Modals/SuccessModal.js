@@ -7,7 +7,7 @@ function SuccessModal({ setThanksModal }) {
       <ModalContent>
         <Head>Thanks!</Head>
         <SubHead>Your Booking is succesfully Submitted.</SubHead>
-        <CloseButton  onClick={() => setThanksModal(false)} > Close </CloseButton>
+        <CloseButton  onClick={() => {setThanksModal(false); window.location.reload();}} > Close </CloseButton>
       </ModalContent>
     </Modal>
   );
