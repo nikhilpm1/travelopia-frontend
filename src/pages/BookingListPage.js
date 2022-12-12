@@ -1,10 +1,17 @@
-import React, {  useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getAllBookings } from '../service/Api';
 
 function BookingListPage() {
     const [bookings, setBookings] = useState([]);
 
-
+    useEffect(() => {
+        getAllBookings().then((res) => {
+            if (res.status === 200) {
+                setBookings(res.data);
+            }
+        });
+    }, []);
 
     return (
         <Main>
