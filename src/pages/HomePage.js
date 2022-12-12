@@ -1,35 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
+import { createBooking } from '../service/Api';
 
 
 function HomePage() {
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [emailField, setEmailField] = useState('');
+    const [countrySelect, setcountrySelect] = useState('');
+    const [persons, setPersons] = useState('');
+    const [budgetField, setBudgetField] = useState('');
+    
+
+    const HandleSubmit =(e)=>{
+        e.preventDefault();
+        const formValues = {
+            first_name: firstName,
+            last_name: lastName,
+            email: emailField,
+            country:countrySelect,
+            no_of_persons: persons,
+            budget: budgetField,
+        }
+        createBooking({...formValues}).then((res)=>{
+            if(res.status === 201){
+                alert('Form submission Succesful')
+            }
+        })
+    }
+
     return (
         <Main>
             <Head />
             <Content>
-                <Form>
+                <Form onSubmit={HandleSubmit}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="text" required onChange={(e)=>setFirstName(e.target.value)} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="text" onChange={(e)=>setLastName(e.target.value)}   required/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Number of People</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
+                        <Form.Control type="email" onChange={(e)=>setEmailField(e.target.value)}   required/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Where do you want to go?</Form.Label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select" aria-label="Default select example" onChange={(e)=>setcountrySelect(e.target.value)} >
                             <option selected>Open this select menu</option>
                             <option value="1">India</option>
                             <option value="2">Africa</option>
@@ -37,12 +59,17 @@ function HomePage() {
                         </select>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Number of People</Form.Label>
+                        <Form.Control type="number" required onChange={(e)=>setPersons(e.target.value)} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Budget Per Person</Form.Label>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">$</span>
                             </div>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" />
+                            <input type="number" onChange={(e)=>setBudgetField(e.target.value)}  required class="form-control" aria-label="Amount (to the nearest dollar)" />
                         </div>
                     </Form.Group>
                     <Button variant="primary" type="submit">
