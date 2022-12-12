@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function ThanksModal({ setThanksModal }) {
+function SuccessModal({ setThanksModal }) {
   return (
     <Modal>
       <ModalContent>
@@ -13,7 +13,7 @@ function ThanksModal({ setThanksModal }) {
   );
 }
 
-export default ThanksModal;
+export default SuccessModal;
 
 const Modal = styled.div`
 position: fixed;
@@ -67,5 +67,8 @@ color: #FBF1E6;
 `;
 
 const CloseButton = styled.button`
-
+border: none;
+border-radius: 10px;
+width: 76px;
+height: 36px;
 `;
